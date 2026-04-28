@@ -2,7 +2,7 @@ package at.hannibal2.skyhanni.features.garden.visitor
 
 import at.hannibal2.skyhanni.api.event.HandleEvent
 import at.hannibal2.skyhanni.events.GuiContainerEvent
-import at.hannibal2.skyhanni.events.GuiContainerEvent.ClickType
+import at.hannibal2.skyhanni.events.GuiContainerEvent.ContainerInput
 import at.hannibal2.skyhanni.events.minecraft.ToolTipTextEvent
 import at.hannibal2.skyhanni.events.minecraft.add
 import at.hannibal2.skyhanni.features.garden.GardenApi
@@ -71,7 +71,7 @@ object VisitorRewardWarning {
             return
         }
 
-        if (event.clickType == ClickType.SHIFT) return
+        if (event.clickType == ContainerInput.SHIFT) return
         if (isRefuseSlot) {
             VisitorApi.changeStatus(visitor, VisitorApi.VisitorStatus.REFUSED, "refused")
             // fallback if tab list is disabled

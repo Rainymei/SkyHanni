@@ -3,7 +3,7 @@ package at.hannibal2.skyhanni.utils
 import at.hannibal2.skyhanni.data.OtherInventoryData
 import at.hannibal2.skyhanni.data.SackApi.getAmountInSacks
 import at.hannibal2.skyhanni.events.GuiContainerEvent
-import at.hannibal2.skyhanni.events.GuiContainerEvent.ClickType
+import at.hannibal2.skyhanni.events.GuiContainerEvent.ContainerInput
 import at.hannibal2.skyhanni.utils.EntityUtils.getArmorInventory
 import at.hannibal2.skyhanni.utils.ItemUtils.getInternalNameOrNull
 import at.hannibal2.skyhanni.utils.ItemUtils.getItemCategoryOrNull
@@ -126,7 +126,7 @@ object InventoryUtils {
     internal fun GuiContainerEvent.SlotClickEvent.makeShiftClick() {
         if (this.clickedButton == 1 && slot?.item?.getItemCategoryOrNull() == ItemCategory.SACK) return
         slot?.index?.let { slotNumber ->
-            clickSlot(slotNumber, container.containerId, mouseButton = 0, mode = ClickType.SHIFT)
+            clickSlot(slotNumber, container.containerId, mouseButton = 0, mode = ContainerInput.SHIFT)
             this.cancel()
         }
     }
@@ -193,7 +193,7 @@ object InventoryUtils {
         slotId: Int,
         windowId: Int = InventoryCompat.getWindowId(),
         mouseButton: Int = 0,
-        mode: ClickType = ClickType.NORMAL,
+        mode: ContainerInput = ContainerInput.NORMAL,
     ) {
         InventoryCompat.clickInventorySlot(windowId, slotId, mouseButton, mode.id)
     }
@@ -201,7 +201,7 @@ object InventoryUtils {
     fun mouseClickSlot(
         slotId: Int,
         mouseButton: Int = 0,
-        mode: ClickType = ClickType.NORMAL,
+        mode: ContainerInput = ContainerInput.NORMAL,
     ) {
         InventoryCompat.mouseClickInventorySlot(slotId, mouseButton, mode.id)
     }

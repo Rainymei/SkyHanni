@@ -123,7 +123,7 @@ allprojects {
     }
 }
 
-stonecutter active "1.21.11"
+stonecutter active "26.1"
 
 stonecutter handlers {
     inherit("accesswidener", "classtweaker")

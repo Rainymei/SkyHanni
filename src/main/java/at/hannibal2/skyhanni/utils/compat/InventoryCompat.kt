@@ -2,7 +2,7 @@ package at.hannibal2.skyhanni.utils.compat
 
 // TODO 26.1 REI compat needed
 //? if < 26.1
-import at.hannibal2.skyhanni.compat.ReiCompat
+//import at.hannibal2.skyhanni.compat.ReiCompat
 import at.hannibal2.skyhanni.test.command.ErrorManager
 import at.hannibal2.skyhanni.utils.SafeItemStack
 import net.minecraft.client.Minecraft
@@ -10,7 +10,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.client.gui.screens.inventory.ContainerScreen
 import net.minecraft.client.player.LocalPlayer
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.inventory.ClickType
+import net.minecraft.world.inventory.ContainerInput
 import net.minecraft.world.inventory.Slot
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
@@ -27,7 +27,7 @@ fun stackUnderCursor(): SafeItemStack? {
     if (stack != null) return stack
     // TODO 26.1 REI compat needed
     //? if < 26.1
-    stack = ReiCompat.getHoveredStackFromRei()
+    //stack = ReiCompat.getHoveredStackFromRei()
     return stack
 }
 
@@ -48,7 +48,7 @@ object InventoryCompat {
         val controller = Minecraft.getInstance().gameMode ?: return
         val player = Minecraft.getInstance().player ?: return
         //~ if > 1.21.11 'handleInventoryMouseClick' -> 'handleContainerInput'
-        controller.handleInventoryMouseClick(windowId, slotId, mouseButton, ClickType.entries[mode], player)
+        controller.handleContainerInput(windowId, slotId, mouseButton, ContainerInput.entries[mode], player)
     }
 
     /**
@@ -59,7 +59,7 @@ object InventoryCompat {
         val gui = Minecraft.getInstance().screen
         if (gui is AbstractContainerScreen<*>) {
             val slotObj = gui.menu.getSlot(slot)
-            val actionType = ClickType.entries[mode]
+            val actionType = ContainerInput.entries[mode]
             gui.slotClicked(slotObj, slot, mouseButton, actionType)
         }
     }
