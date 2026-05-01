@@ -136,3 +136,21 @@ class KotlinTypeAdapterFactory : TypeAdapterFactory {
         }
     }
 }
+
+class OptionalTypeAdapterFactory : TypeAdapterFactory {
+    override fun <T> create(gson: Gson, type: TypeToken<T>): TypeAdapter<T>? {
+        if (type.rawType != java.util.Optional::class.java) return null
+
+        val innerAdapter = gson.getAdapter(TypeToken.get((type.type as java.lang.reflect.ParameterizedType).actualTypeArguments[0]))
+        @Suppress("UNCHECKED_CAST")
+        return object : TypeAdapter<T>() {
+            override fun write(out: JsonWriter, value: T?) {
+                val opt = value as? java.util.Optional<*>
+                if (opt == null || opt.isEmpty) out.nullValue()
+                else (innerAdapter as TypeAdapter<Any>).write(out, opt.get())
+            }
+            override fun read(reader: JsonReader): T =
+                java.util.Optional.ofNullable(innerAdapter.read(reader)) as T
+        }
+    }
+}
