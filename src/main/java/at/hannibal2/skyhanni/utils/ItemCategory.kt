@@ -16,7 +16,7 @@ enum class ItemCategory {
     ROD_PART,
     AXE,
     GAUNTLET,
-    @Deprecated("No longer exists") HOE,
+    @Deprecated("No longer exists", ReplaceWith("ItemCategory.FARMING_TOOL")) HOE,
     PICKAXE,
     SHOVEL,
     DRILL,
@@ -44,7 +44,9 @@ enum class ItemCategory {
     TROPHY_FISH,
     ARROW,
     ARROW_POISON,
-    ITEM,
+    // TODO This used to be used as a fake category for uncategorized dungeon items.
+    //  Remove it after ensuring it doesn't break anything.
+    @Deprecated("Fake category", ReplaceWith("ItemCategory.NONE")) ITEM,
     PET_ITEM,
     ENCHANTED_BOOK,
     FISHING_BAIT,
@@ -72,6 +74,7 @@ enum class ItemCategory {
     MUTATION,
     WATERING_CAN,
     FARMING_TOOL,
+    TROPHY,
 
     NONE,
     ;
@@ -86,5 +89,8 @@ enum class ItemCategory {
         val armor = setOf(HELMET, CHESTPLATE, LEGGINGS, BOOTS)
 
         val equipment = setOf(NECKLACE, BELT, CLOAK, GLOVES, BRACELET)
+
+        @Suppress("DEPRECATION")
+        val deprecated = listOf(FISHING_WEAPON, HOE, ITEM)
     }
 }
