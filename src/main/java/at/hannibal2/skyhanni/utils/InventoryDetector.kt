@@ -6,6 +6,7 @@ import at.hannibal2.skyhanni.events.InventoryFullyOpenedEvent
 import at.hannibal2.skyhanni.skyhannimodule.SkyHanniModule
 import at.hannibal2.skyhanni.test.command.ErrorManager
 import at.hannibal2.skyhanni.utils.RegexUtils.matches
+import java.util.concurrent.CopyOnWriteArrayList
 import java.util.regex.Pattern
 
 /**
@@ -36,6 +37,7 @@ class InventoryDetector(
         detectors.add(this)
     }
 
+    @Volatile
     private var inInventory = false
 
     /**
@@ -45,7 +47,7 @@ class InventoryDetector(
 
     @SkyHanniModule
     companion object {
-        private val detectors = mutableListOf<InventoryDetector>()
+        private val detectors = CopyOnWriteArrayList<InventoryDetector>()
 
         @HandleEvent(priority = HandleEvent.HIGHEST)
         fun onInventoryClose(event: InventoryCloseEvent) {
