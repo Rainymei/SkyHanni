@@ -28,8 +28,8 @@ object GardenCropSpeed {
     private var blocksBroken = 0
     private var secondsStopped = 0
 
-    @HandleEvent(onlyOnSkyblock = true)
-    fun onSecondPassed(event: SecondPassedEvent) {
+    @HandleEvent(onlyOnIsland = GARDEN)
+    private fun onSecondPassed(event: SecondPassedEvent) {
         if (isEnabled()) {
             checkSpeed()
         }
@@ -40,7 +40,7 @@ object GardenCropSpeed {
         lastBrokenCrop = null
     }
 
-    @HandleEvent
+    @HandleEvent(onlyOnIsland = GARDEN)
     private fun onGardenToolChange(event: GardenToolChangeEvent) {
         if (isEnabled()) {
             resetSpeed()
